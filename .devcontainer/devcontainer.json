@@ -1,0 +1,26 @@
+{
+    "dockerComposeFile": [
+		 "../docker/docker-compose-dev.yaml"
+	],
+	"service": "frontend",
+	"runServices": [
+		"generator",
+		"neo4j",
+		"frontend",
+		"graphql"
+	],
+	"workspaceFolder": "/app/workspace",
+	"customizations": {
+		"vscode": {
+			"settings": {
+		
+			},
+			"extensions": [
+				"ms-azuretools.vscode-docker",
+				"ms-python.python"
+			]
+		}
+	},
+	"overrideCommand": false,
+	"remoteUser": "root"
+}

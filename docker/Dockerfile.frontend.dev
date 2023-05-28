@@ -1,0 +1,12 @@
+FROM node:20
+
+RUN apt-get update && apt install -y --no-install-recommends \
+        watchman \
+    && rm -rf /var/lib/apt/lists*
+
+WORKDIR /app/workspace/frontend
+
+COPY frontend/package.json .
+RUN npm install
+
+CMD npx expo start --web

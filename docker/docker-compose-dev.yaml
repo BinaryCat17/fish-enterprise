@@ -1,0 +1,62 @@
+services:
+  generator:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.generator.dev
+    volumes:
+      - type: bind
+        source: ../
+        target: /app/workspace/
+      - resources:/app/workspace/resources
+    ports:
+      - "8081:8081"
+    env_file: ../.env
+
+  neo4j:
+    image: bitnami/neo4j:latest
+    ports:
+      - '7474:7474'
+      - '7473:7473'
+      - '7687:7687'
+    volumes:
+      - 'neo4j_data:/bitnami'
+    env_file: ../.env
+
+  graphql:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.graphql.dev
+    volumes:
+      - type: bind
+        source: ../
+        target: /app/workspace/
+      - node_modules_graphql:/app/workspace/graphql/node_modules
+      - resources:/app/workspace/resources
+    ports:
+      - '4000:4000'
+    environment:
+      NODE_ENV: development
+    env_file: ../.env
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.frontend.dev  
+    volumes:
+      - type: bind
+        source: ../
+        target: /app/workspace/
+      - node_modules_frontend:/app/workspace/frontend/node_modules
+      - resources:/app/workspace/resources
+    ports:
+      - '8080:19000'
+    environment:
+      NODE_ENV: development
+    env_file: ../.env
+
+volumes:
+  resources:
+  node_modules_frontend:
+  node_modules_graphql:
+  neo4j_data:
+    driver: local
