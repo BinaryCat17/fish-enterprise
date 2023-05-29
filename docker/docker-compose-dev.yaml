@@ -20,6 +20,8 @@ services:
       - '7687:7687'
     volumes:
       - 'neo4j_data:/bitnami'
+    environment:
+      - NEO4J_PASSWORD=bitnami1
     env_file: ../.env
 
   graphql:

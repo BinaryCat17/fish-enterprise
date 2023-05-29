@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { View } from '../components/Themed';
 import { Header, Footer } from '../components/Layout';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 
 export {
@@ -14,9 +16,23 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          locations: offsetLimitPagination(),
+          characters: offsetLimitPagination(),
+          episodes: offsetLimitPagination()
+        }
+      }
+    }
+  })
+});
+
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(pages)"
 };
 
 export default function RootLayout() {
@@ -44,21 +60,25 @@ function RootLayoutNav() {
 
   return (
     <>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <View style={styles.wrap}>
-          <View style={styles.header}>
-            <Header style={[styles.mainPadding]}/>
-          </View>
-          <View style={[styles.mainPadding, styles.content]}>
-            <View style={styles.nestedContent}>
-              <Slot />
+      <ApolloProvider client={client}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <View style={styles.wrap}>
+            <View style={styles.header}>
+              <Header style={[styles.mainPadding]}/>
+            </View>
+            <View style={[styles.mainPadding]}>
+              <View style={styles.content}>
+                <View style={styles.nestedContent}>
+                  <Slot />
+                </View>
+              </View>
+            </View>
+            <View style={styles.footer}>
+              <Footer style={styles.mainPadding}/>
             </View>
           </View>
-          <View style={styles.footer}>
-            <Footer style={styles.mainPadding}/>
-          </View>
-        </View>
-      </ThemeProvider>
+        </ThemeProvider>
+      </ApolloProvider>
     </>
   );
 }
@@ -71,7 +91,7 @@ const styles = StyleSheet.create({
         height: "60px",
         width: "100%",
         shadowColor: "rgba(0, 0, 0, 0.1)",
-        shadowOffset: {width: -2, height: 4},
+        shadowOffset: {width: -2, height: 2},
         shadowRadius: 3,
     },
     wrap: {
@@ -81,11 +101,13 @@ const styles = StyleSheet.create({
         margin: 0
     },
     content: {
-        flex: 1
+      width: "100%",
     },
     nestedContent: {
         position: "absolute",
         top: "60px",
+        flex: 1,
+        width: "100%",
     },
     mainPadding: {
         paddingLeft: "210px",
@@ -93,8 +115,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     footer: {
-      width: "100%",
-      height: "60px",
       zIndex: 999,
+      height: "60px",
+      width: "100%",
+      shadowColor: "rgba(0, 0, 0, 0.1)",
+      shadowOffset: {width: 2, height: -2},
+      shadowRadius: 3,
     }
 });

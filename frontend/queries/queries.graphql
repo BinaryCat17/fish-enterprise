@@ -1,0 +1,61 @@
+query ListCharacters(
+  $offset: Int,
+  $limit: Int,
+  $fname: String,
+  $fspecie: String,
+  $fgender: String,
+  $fstatus: String
+) {
+  characters(options: {offset: $offset, limit: $limit},
+      where: { name_CONTAINS: $fname }
+  ) {
+    name,
+    specie(where: {name: $fspecie}) {
+      name
+    },
+    gender(where: {name: $fgender}) {
+      name
+    }
+    status(where: {name: $fstatus}) {
+      name
+    }
+  }
+}
+
+query ListLocations(
+  $offset: Int,
+  $limit: Int,
+  $fname: String,
+  $fdimension: String,
+  $fdimensionType: String
+) {
+  locations(options: {offset: $offset, limit: $limit},
+      where: { name_CONTAINS: $fname }
+  ) {
+    name,
+    dimension(where: {name: $fdimension}) {
+      name
+    },
+    type(where: {name: $fdimensionType}) {
+      name
+    }
+  }
+}
+
+query ListEpisodes(
+  $offset: Int,
+  $limit: Int,
+  $fname: String
+) {
+  episodes(options: {offset: $offset, limit: $limit},
+      where: {
+        OR: [
+          { name_CONTAINS: $fname },
+          { code_CONTAINS: $fname }
+      ]}
+  ) {
+    name,
+    date,
+    code
+  }
+}

@@ -1,0 +1,57 @@
+type Character {
+    id: ID! @id
+    name: String
+    specie: Specie @relationship(type: "HAS", direction: OUT)
+    gender: Gender @relationship(type: "HAS", direction: OUT)
+    status: Status @relationship(type: "HAS", direction: OUT)
+    origin: String
+    type: String
+    location: Location @relationship(type: "LIVES_IN", direction: OUT)
+    episodes: [Episode!]! @relationship(type: "ACTED_IN", direction: OUT)    
+}
+
+type Location {
+    id: ID! @id
+    name: String!
+    type: DimensionType @relationship(type: "HAS", direction: OUT)
+    dimension: Dimension @relationship(type: "HAS", direction: OUT)
+    residents: [Character!]! @relationship(type: "LIVES_IN", direction: IN)
+}
+
+type Episode {
+    id: ID! @id
+    name: String!
+    date: String!
+    code: String!
+    cast: [Character!]! @relationship(type: "ACTED_IN", direction: IN)
+}
+
+type Specie {
+    id: ID! @id
+    name: String!
+    characters: Character @relationship(type: "HAS", direction: IN)
+}
+
+type Gender {
+    id: ID! @id
+    name: String!
+    characters: Character @relationship(type: "HAS", direction: IN)
+}
+
+type Status {
+    id: ID! @id
+    name: String!
+    characters: Character @relationship(type: "HAS", direction: IN)
+}
+
+type Dimension {
+    id: ID! @id
+    name: String!
+    locations: Location @relationship(type: "HAS", direction: IN)
+}
+
+type DimensionType {
+    id: ID! @id
+    name: String!
+    locations: Location @relationship(type: "HAS", direction: IN)
+}

@@ -5,6 +5,7 @@ module.exports = function (api) {
     plugins: [
       require.resolve("expo-router/babel"),
       'react-native-web',
+      "import-graphql",
       ["module-resolver", {
         "alias": {
           "^react-native$": "react-native-web"

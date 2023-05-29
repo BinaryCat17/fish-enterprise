@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --clean",
+    "start": "rm -rf ./node_modules/.cache/babel-loader && expo start --clean",
     "android": "expo start --android --clean",
     "ios": "expo start --ios --clean",
     "web": "expo start --web --clean",
@@ -15,6 +15,7 @@
     }
   },
   "dependencies": {
+    "@apollo/client": "^3.7.14",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^18.0.1",
     "@react-navigation/native": "^6.0.2",
@@ -26,6 +27,8 @@
     "expo-status-bar": "~1.4.4",
     "expo-system-ui": "~2.2.1",
     "expo-web-browser": "~12.1.1",
+    "graphql": "^15.8.0",
+    "graphql.macro": "^1.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",

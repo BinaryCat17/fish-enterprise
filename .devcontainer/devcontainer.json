@@ -17,6 +17,7 @@
 			},
 			"extensions": [
 				"ms-azuretools.vscode-docker",
+				"orsenkucher.vscode-graphql",
 				"ms-python.python"
 			]
 		}

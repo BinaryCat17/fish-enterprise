@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "babel-plugin-import-graphql": "^2.8.1"
+  }
+}
