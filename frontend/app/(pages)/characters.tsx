@@ -59,7 +59,6 @@ function Characters({name, specie, gender, status}: {name: string, specie: strin
   if (loading) return <Loading/>
   if (error) return <Error error={error.message}/>;
 
-  console.log(data)
   const characters = data.characters.map((c: { name: string, id: string }) => {
     return <Text key={c.id}>{c.name}</Text>
   })

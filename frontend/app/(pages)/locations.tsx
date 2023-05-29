@@ -54,7 +54,6 @@ function Characters({name, fdimension, fdimensionType}: {name: string, fdimensio
   if (loading) return <Loading/>
   if (error) return <Error error={error.message}/>;
 
-  console.log(data)
   const locations = data.locations.map((c: { name: string, id: string }) => {
     return <Text key={c.id}>{c.name}</Text>
   })
