@@ -6,6 +6,7 @@ import { useApolloClient, useQuery } from '@apollo/client';
 import {TextSearch, SelectorFilter} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
+import Card from '../../components/Card';
 import {ListCharacters, ListCharacterOptions} from '../../queries/queries.graphql';
 
 
@@ -45,13 +46,10 @@ export default function CharacterFilters() {
 
 function CharacterCard({name, id, specie}: {name: string, id: string, specie: string}) {
   return (
-    <View style={styles.card}>
-      <Image source={{uri: 'assets/images/' + name + '.png'}} style={styles.cardImage}/>
-      <View style={styles.cardTextBlock}>
-        <Text style={styles.cardName}>{name}</Text>
+    <Card title={name} imageName={name} imageHeight={168}>
         <Text style={styles.cardSpecial}>{specie}</Text>
-      </View>
-    </View>
+    </Card>
+
   )
 }
 
@@ -85,33 +83,10 @@ function Characters({name, specie, gender, status}: {name: string, specie: strin
 
 const styles = StyleSheet.create({
   characterContainer: {
-    marginTop: 20
+    marginTop: 25
   },
   container: {
     marginTop: 20
-  },
-  card: {
-    flexDirection: 'column',
-    height: 240,
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    shadowOffset: {width: -2, height: 2},
-    shadowRadius: 3,
-    borderRadius: 15
-  },
-  cardImage: {
-    height: 168,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15
-  },
-  cardTextBlock: {
-    margin: 16
-  },
-  cardName: {
-    fontFamily: 'Roboto',
-    fontStyle: 'normal',
-    fontWeight: "500",
-    fontSize: 20,
-    lineHeight: 30
   },
   cardSpecial: {
     fontFamily: 'Roboto',

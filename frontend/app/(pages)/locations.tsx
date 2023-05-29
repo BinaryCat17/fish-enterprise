@@ -6,6 +6,7 @@ import { useApolloClient, useQuery } from '@apollo/client';
 import {TextSearch, SelectorFilter} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
+import Card from '../../components/Card';
 import {ListLocations, ListLocationOptions} from '../../queries/queries.graphql';
 
 
@@ -26,14 +27,14 @@ export default function LocationFilters() {
   return (
     <PageTemplate imageSource="/assets/images/locations.png">
         <View style={styles.filterStyle}>
-            <GridView>
+            <GridView rowLen={3}>
                 <TextSearch onSubmitEditing={onChangeName}/>
                 <SelectorFilter onValueChange={onChangeType} values={types} initialValue={'Type'}/>
                 <SelectorFilter onValueChange={onChangeDimension} values={dimensions} initialValue={'Dimension'}/>
             </GridView>
         </View>
 
-        <Characters
+        <Locations
             name={name}
             fdimensionType={(type == 'Type' ? undefined : type)}
             fdimension={(dimension == 'Dimension' ? undefined : dimension)}
@@ -42,12 +43,20 @@ export default function LocationFilters() {
   )
 }
 
-function Characters({name, fdimension, fdimensionType}: {name: string, fdimension: string | undefined, fdimensionType: string | undefined}) {
+function LocationCard({name, id, dimension, type}: {name: string, id: string, dimension: string, type: string}) {
+    return (
+      <Card title={name + '('+dimension+')'}>
+          <Text style={styles.cardSpecial}>{type}</Text>
+      </Card>
+    )
+  }
+  
+
+function Locations({name, fdimension, fdimensionType}: {name: string, fdimension: string | undefined, fdimensionType: string | undefined}) {
   const { loading, data, error } = useQuery(ListLocations, {
-    fetchPolicy: 'network-only',
     variables: {
       offset: 0,
-      limit: 10,
+      limit: 12,
       fname: name,
       fdimensionType: fdimensionType,
       fdimension: fdimension,
@@ -57,25 +66,36 @@ function Characters({name, fdimension, fdimensionType}: {name: string, fdimensio
   if (loading) return <Loading/>
   if (error) return <Error error={error.message}/>;
 
-  const locations = data.locations.map((c: { name: string, id: string }) => {
-    return <Text key={c.id}>{c.name}</Text>
+  const locations = data.locations.map((c: { name: string, id: string, dimension: {name: string}, type: {name: string} }) => {
+    return <LocationCard key={c.id} name={c.name} id={c.id} dimension={c.dimension.name} type={c.type.name}/>
   })
 
   return (
-      <View style={styles.locationContainer}>
+    <View style={styles.locationContainer}>
+      <GridView rowLen={4}>
         {locations}
-      </View>
-  )
+      </GridView>
+    </View>
+    )   
 }
 
 const styles = StyleSheet.create({
   locationContainer: {
-
+    marginTop: 25
   },
   container: {
-    marginTop: 20
+    marginTop: 25
   },
   filterStyle: {
     paddingHorizontal: "10%"
+  },
+  cardSpecial: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: "400",
+    fontSize: 20,
+    lineHeight: 21,
+    color: "rgba(0,0,0,0.6)",
+    paddingVertical: 20
   }
 })

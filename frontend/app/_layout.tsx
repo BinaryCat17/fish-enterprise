@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     },
     content: {
       width: "100%",
+      marginBottom: 85
     },
     nestedContent: {
         top: "60px",
@@ -119,5 +120,6 @@ const styles = StyleSheet.create({
       shadowColor: "rgba(0, 0, 0, 0.1)",
       shadowOffset: {width: 2, height: -2},
       shadowRadius: 3,
+      zIndex: 999
     }
 });

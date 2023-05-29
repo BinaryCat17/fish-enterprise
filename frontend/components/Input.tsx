@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "rgba(0, 0, 0, 0.7)",
         borderWidth: 0,
-        backgroundColor: "rgba(0,0,0,0)"
+        backgroundColor: "rgba(0,0,0,0)",
+        height: 50
     },
     borderStyle: {
         flex: 1,
@@ -72,6 +73,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         position: 'relative',
-        padding: 15,
+        padding: 5
     }
 });
