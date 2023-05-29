@@ -12,8 +12,8 @@ import {ListLocations, ListLocationOptions} from '../../queries/queries.graphql'
 export default function LocationFilters() {  
   const client = useApolloClient()
   const [name, onChangeName] = React.useState('');
-  const [type, onChangeType] = React.useState('empty');
-  const [dimension, onChangeDimension] = React.useState('empty');
+  const [type, onChangeType] = React.useState('Type');
+  const [dimension, onChangeDimension] = React.useState('Dimension');
 
   const { loading, error, data } = useQuery(ListLocationOptions);
   if (loading) return <Loading/>;
@@ -25,16 +25,19 @@ export default function LocationFilters() {
   client.cache.reset();
   return (
     <PageTemplate imageSource="/assets/images/locations.png">
-      <GridView>
-        <TextSearch onSubmitEditing={onChangeName}/>
-        <SelectorFilter onValueChange={onChangeType} values={types}/>
-        <SelectorFilter onValueChange={onChangeDimension} values={dimensions}/>
-      </GridView>
-      <Characters
-          name={name}
-          fdimension={(dimension == 'empty' ? undefined : dimension)}
-          fdimensionType={(type == 'empty' ? undefined : type)}
-      />
+        <View style={styles.filterStyle}>
+            <GridView>
+                <TextSearch onSubmitEditing={onChangeName}/>
+                <SelectorFilter onValueChange={onChangeType} values={types} initialValue={'Type'}/>
+                <SelectorFilter onValueChange={onChangeDimension} values={dimensions} initialValue={'Dimension'}/>
+            </GridView>
+        </View>
+
+        <Characters
+            name={name}
+            fdimensionType={(type == 'Type' ? undefined : type)}
+            fdimension={(dimension == 'Dimension' ? undefined : dimension)}
+        />
     </PageTemplate>
   )
 }
@@ -72,4 +75,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20
   },
+  filterStyle: {
+    paddingHorizontal: "10%"
+  }
 })

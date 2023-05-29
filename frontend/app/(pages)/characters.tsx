@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import PageTemplate from "../../components/PageTemplate";
 import {Loading, Error} from "../../components/Loading"
 import { useApolloClient, useQuery } from '@apollo/client';
@@ -12,9 +12,9 @@ import {ListCharacters, ListCharacterOptions} from '../../queries/queries.graphq
 export default function CharacterFilters() {  
   const client = useApolloClient()
   const [name, onChangeName] = React.useState('');
-  const [specie, onChangeSpecie] = React.useState('empty');
-  const [gender, onChangeGender] = React.useState('empty');
-  const [status, onChangeStatus] = React.useState('empty');
+  const [specie, onChangeSpecie] = React.useState('Specie');
+  const [gender, onChangeGender] = React.useState('Gender');
+  const [status, onChangeStatus] = React.useState('Status');
 
   const { loading, error, data } = useQuery(ListCharacterOptions);
   if (loading) return <Loading/>;
@@ -27,28 +27,39 @@ export default function CharacterFilters() {
   client.cache.reset();
   return (
     <PageTemplate imageSource="/assets/images/characters.png">
-      <GridView>
+      <GridView rowLen={4}>
         <TextSearch onSubmitEditing={onChangeName}/>
-        <SelectorFilter onValueChange={onChangeSpecie} values={species}/>
-        <SelectorFilter onValueChange={onChangeGender} values={genders}/>
-        <SelectorFilter onValueChange={onChangeStatus} values={statuses}/>
+        <SelectorFilter onValueChange={onChangeSpecie} values={species} initialValue='Specie'/>
+        <SelectorFilter onValueChange={onChangeGender} values={genders} initialValue='Gender'/>
+        <SelectorFilter onValueChange={onChangeStatus} values={statuses} initialValue='Status'/>
       </GridView>
       <Characters
           name={name}
-          specie={(specie == 'empty' ? undefined : specie)}
-          gender={(gender == 'empty' ? undefined : gender)}
-          status={(status == 'empty' ? undefined : status)}
+          specie={(specie == 'Specie' ? undefined : specie)}
+          gender={(gender == 'Gender' ? undefined : gender)}
+          status={(status == 'Status' ? undefined : status)}
       />
     </PageTemplate>
   )
 }
 
+function CharacterCard({name, id, specie}: {name: string, id: string, specie: string}) {
+  return (
+    <View style={styles.card}>
+      <Image source={{uri: 'assets/images/' + name + '.png'}} style={styles.cardImage}/>
+      <View style={styles.cardTextBlock}>
+        <Text style={styles.cardName}>{name}</Text>
+        <Text style={styles.cardSpecial}>{specie}</Text>
+      </View>
+    </View>
+  )
+}
+
 function Characters({name, specie, gender, status}: {name: string, specie: string | undefined, gender: string | undefined, status: string | undefined}) {
   const { loading, data, error } = useQuery(ListCharacters, {
-    fetchPolicy: 'network-only',
     variables: {
       offset: 0,
-      limit: 10,
+      limit: 8,
       fname: name,
       fspecie: specie,
       fgender: gender,
@@ -59,22 +70,55 @@ function Characters({name, specie, gender, status}: {name: string, specie: strin
   if (loading) return <Loading/>
   if (error) return <Error error={error.message}/>;
 
-  const characters = data.characters.map((c: { name: string, id: string }) => {
-    return <Text key={c.id}>{c.name}</Text>
+  const characters = data.characters.map((c: { name: string, id: string, specie: {name: string} }) => {
+    return <CharacterCard key={c.id} name={c.name} id={c.id} specie={c.specie.name}/>
   })
 
   return (
       <View style={styles.characterContainer}>
-        {characters}
+        <GridView rowLen={4}>
+          {characters}
+        </GridView>
       </View>
   )
 }
 
 const styles = StyleSheet.create({
   characterContainer: {
-
+    marginTop: 20
   },
   container: {
     marginTop: 20
   },
+  card: {
+    flexDirection: 'column',
+    height: 240,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: {width: -2, height: 2},
+    shadowRadius: 3,
+    borderRadius: 15
+  },
+  cardImage: {
+    height: 168,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15
+  },
+  cardTextBlock: {
+    margin: 16
+  },
+  cardName: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: "500",
+    fontSize: 20,
+    lineHeight: 30
+  },
+  cardSpecial: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: "400",
+    fontSize: 14,
+    lineHeight: 21,
+    color: "rgba(0,0,0,0.6)"
+  }
 })

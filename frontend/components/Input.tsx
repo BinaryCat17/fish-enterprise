@@ -11,8 +11,8 @@ export function InputBorder({children}: {children: React.ReactNode }) {
     )
 }
 
-export function SelectorFilter({onValueChange, values, selectedValue}: 
-    {onValueChange?: ((itemValue: any, itemIndex: number) => void), values?: [string | number] | [], selectedValue?: string | number}) {
+export function SelectorFilter({onValueChange, values, selectedValue, initialValue}: 
+    {onValueChange?: ((itemValue: any, itemIndex: number) => void), values?: [string | number] | [], selectedValue?: string | number, initialValue?: string}) {
     
     if (!values) {
         values = []
@@ -28,7 +28,7 @@ export function SelectorFilter({onValueChange, values, selectedValue}:
                 selectedValue={selectedValue}
                 onValueChange={onValueChange}
             >
-                <Picker.Item label='empty' value='empty'/>
+                <Picker.Item label={initialValue} value={initialValue}/>
                 {pickerValues}
             </Picker>
         </InputBorder>

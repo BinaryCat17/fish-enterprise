@@ -104,18 +104,16 @@ const styles = StyleSheet.create({
       width: "100%",
     },
     nestedContent: {
-        position: "absolute",
         top: "60px",
         flex: 1,
         width: "100%",
     },
     mainPadding: {
-        paddingLeft: "210px",
-        paddingRight: "210px",
+        paddingLeft: "10%",
+        paddingRight: "10%",
         flex: 1,
     },
     footer: {
-      zIndex: 999,
       height: "60px",
       width: "100%",
       shadowColor: "rgba(0, 0, 0, 0.1)",

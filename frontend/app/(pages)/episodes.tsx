@@ -16,12 +16,15 @@ export default function LocationFilters() {
   client.cache.reset();
   return (
     <PageTemplate imageSource="/assets/images/episodes.png">
-      <GridView>
-        <TextSearch onSubmitEditing={onChangeName}/>
-      </GridView>
-      <Characters
-          name={name}
-      />
+        <View style={styles.filterStyle}>
+            <GridView>
+                <TextSearch onSubmitEditing={onChangeName}/>
+            </GridView>
+        </View>
+
+        <Characters
+            name={name}
+        />
     </PageTemplate>
   )
 }
@@ -57,4 +60,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20
   },
+  filterStyle: {
+    paddingHorizontal: "20%"
+  }
 })

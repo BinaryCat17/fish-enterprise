@@ -1,6 +1,7 @@
 import { StyleSheet, Image } from 'react-native';
 import { Text, View, ViewProps } from '../components/Themed';
 import { Link } from "expo-router";
+import { ExternalLink } from './ExternalLink';
 
 export function Header(props: ViewProps) {
     return (
@@ -21,7 +22,7 @@ export function Footer(props: ViewProps) {
     return (
         <View {...props}>
             <View style={styles.footerRow}>
-                <Text style={styles.linkStyle}>Made with ❤️ by BinaryCat</Text>
+                <Text style={styles.linkStyle}>Made with ❤️ by <ExternalLink style={styles.hrefStyle} href={'https://github.com/BinaryCat17/fish-enterprise'}>BinaryCat17</ExternalLink></Text>
             </View>
         </View>
     )
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 18,
         lineHeight: 21,
-        marginLeft: 24
+        marginLeft: 24,
+    },
+    hrefStyle: {
+        color: 'green'
     }
 });
