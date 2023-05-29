@@ -8,6 +8,7 @@ import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
 import {ListLocations, ListLocationOptions} from '../../queries/queries.graphql';
+import { Button } from '../../components/Input';
 
 
 export default function LocationFilters() {  
@@ -53,7 +54,7 @@ function LocationCard({name, id, dimension, type}: {name: string, id: string, di
   
 
 function Locations({name, fdimension, fdimensionType}: {name: string, fdimension: string | undefined, fdimensionType: string | undefined}) {
-  const { loading, data, error } = useQuery(ListLocations, {
+  const { loading, data, error, fetchMore } = useQuery(ListLocations, {
     variables: {
       offset: 0,
       limit: 12,
@@ -75,6 +76,17 @@ function Locations({name, fdimension, fdimensionType}: {name: string, fdimension
       <GridView rowLen={4}>
         {locations}
       </GridView>
+      <View style={styles.button}>
+          <Button title='Load More' onClick={
+            () => {
+              console.log(data.locations.length)
+              fetchMore({
+                variables: {
+                  offset: data.locations.length,
+                }
+              })
+        }}/>
+      </View>
     </View>
     )   
 }
@@ -97,5 +109,10 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: "rgba(0,0,0,0.6)",
     paddingVertical: 20
+  },
+  button: {
+    width: 200,
+    marginTop: 25,
+    alignSelf:'center'
   }
 })

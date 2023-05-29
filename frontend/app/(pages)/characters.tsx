@@ -3,7 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import PageTemplate from "../../components/PageTemplate";
 import {Loading, Error} from "../../components/Loading"
 import { useApolloClient, useQuery } from '@apollo/client';
-import {TextSearch, SelectorFilter} from "../../components/Input";
+import {TextSearch, SelectorFilter, Button} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
@@ -54,7 +54,7 @@ function CharacterCard({name, id, specie}: {name: string, id: string, specie: st
 }
 
 function Characters({name, specie, gender, status}: {name: string, specie: string | undefined, gender: string | undefined, status: string | undefined}) {
-  const { loading, data, error } = useQuery(ListCharacters, {
+  const { loading, data, error, fetchMore } = useQuery(ListCharacters, { 
     variables: {
       offset: 0,
       limit: 8,
@@ -77,6 +77,17 @@ function Characters({name, specie, gender, status}: {name: string, specie: strin
         <GridView rowLen={4}>
           {characters}
         </GridView>
+        <View style={styles.button}>
+          <Button title='Load More' onClick={
+            () => {
+              console.log(data.characters.length)
+              fetchMore({
+                variables: {
+                  offset: data.characters.length,
+                }
+              })
+        }}/>
+        </View>
       </View>
   )
 }
@@ -95,5 +106,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     color: "rgba(0,0,0,0.6)"
+  },
+  button: {
+    width: 200,
+    marginTop: 25,
+    alignSelf:'center'
   }
 })

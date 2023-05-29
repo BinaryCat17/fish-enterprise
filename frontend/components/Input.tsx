@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, Button as DefaultButton } from 'react-native';
 import { View } from '../components/Themed';
 import { Picker } from '@react-native-picker/picker';
 
@@ -50,6 +50,14 @@ export function TextSearch({onSubmitEditing, onChange, value}: {
                 value={value}
             />
         </InputBorder>
+    )
+}
+
+export function Button({title, onClick}: {title: string, onClick?: (() => void)}) {
+    return (
+        <View>
+            <DefaultButton title={title} onPress={onClick}/>
+        </View>
     )
 }
 

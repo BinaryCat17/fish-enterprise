@@ -7,7 +7,8 @@ import {TextSearch, SelectorFilter} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
-import {ListEpisodes} from '../../queries/queries.graphql';0
+import {ListEpisodes} from '../../queries/queries.graphql';
+import { Button } from '../../components/Input';
 
 
 export default function LocationFilters() {  
@@ -38,7 +39,7 @@ function EpisodeCard({name, id, date, code}: {name: string, id: string, date: st
 }
 
 function Characters({name}: {name: string}) {
-  const { loading, data, error } = useQuery(ListEpisodes, {
+  const { loading, data, error, fetchMore } = useQuery(ListEpisodes, {
     variables: {
       offset: 0,
       limit: 12,
@@ -58,6 +59,17 @@ function Characters({name}: {name: string}) {
       <GridView rowLen={4}>
         {episodes}
       </GridView>
+      <View style={styles.button}>
+          <Button title='Load More' onClick={
+            () => {
+              console.log(data.episodes.length)
+              fetchMore({
+                variables: {
+                  offset: data.episodes.length,
+                }
+              })
+        }}/>
+      </View>
     </View>
     )   
 }
@@ -89,5 +101,10 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: "rgba(0,0,0,0.7)",
     paddingVertical: 20
+  },
+  button: {
+    width: 200,
+    marginTop: 25,
+    alignSelf:'center'
   }
 })

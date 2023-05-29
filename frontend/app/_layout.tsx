@@ -22,9 +22,27 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          locations: offsetLimitPagination(),
-          characters: offsetLimitPagination(),
-          episodes: offsetLimitPagination()
+          characters: {
+            keyArgs: false,
+            merge(existing = [], incoming) {
+              console.log('merge')
+              return [...existing, ...incoming];
+            }
+          },
+          locations: {
+            keyArgs: false,
+            merge(existing = [], incoming) {
+              console.log('merge')
+              return [...existing, ...incoming];
+            }
+          },
+          episodes: {
+            keyArgs: false,
+            merge(existing = [], incoming) {
+              console.log('merge')
+              return [...existing, ...incoming];
+            }
+          }
         }
       }
     }
