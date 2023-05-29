@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { View } from '../components/Themed';
 
-export default function PageTemplate({imageSource}: {imageSource: string}) {
+export default function PageTemplate({imageSource, children}: {imageSource: string, children: React.ReactNode }) {
     const [imageSize, setImageSize] = useState({width:0, height:0});
 
     useEffect(() => {
@@ -17,6 +17,9 @@ export default function PageTemplate({imageSource}: {imageSource: string}) {
                 height: 200,
                 width: 200 / (imageSize.height / imageSize.width)
             }}/>
+            <View style={styles.contentContainer}>
+                {children}
+            </View>
         </View>
     )
 }
@@ -26,5 +29,9 @@ const styles = StyleSheet.create({
         marginTop: 26,
         flexDirection: "column",
         alignItems: "center",
+    },
+    contentContainer: {
+        marginTop: 20,
+        width: "100%"
     }
 });

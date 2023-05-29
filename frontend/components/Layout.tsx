@@ -21,7 +21,7 @@ export function Footer(props: ViewProps) {
     return (
         <View {...props}>
             <View style={styles.footerRow}>
-                <Text style={styles.linkStyle}>Make with ❤️ for the MobProgramming team</Text>
+                <Text style={styles.linkStyle}>Made with ❤️ by BinaryCat</Text>
             </View>
         </View>
     )

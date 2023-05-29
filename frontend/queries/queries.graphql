@@ -7,18 +7,42 @@ query ListCharacters(
   $fstatus: String
 ) {
   characters(options: {offset: $offset, limit: $limit},
-      where: { name_CONTAINS: $fname }
+      where: {
+        name_CONTAINS: $fname,
+        specie: {name: $fspecie},
+        gender: {name: $fgender},
+        status: {name: $fstatus}
+      }
   ) {
-    name,
-    specie(where: {name: $fspecie}) {
+    name
+    id
+    specie {
       name
+      id
     },
-    gender(where: {name: $fgender}) {
+    gender {
       name
+      id
     }
-    status(where: {name: $fstatus}) {
+    status {
       name
+      id
     }
+  }
+}
+
+query ListCharacterOptions {
+  genders {
+    id
+    name
+  }
+  species {
+    id
+    name
+  }
+  statuses {
+    id
+    name
   }
 }
 
@@ -30,16 +54,34 @@ query ListLocations(
   $fdimensionType: String
 ) {
   locations(options: {offset: $offset, limit: $limit},
-      where: { name_CONTAINS: $fname }
+      where: {
+        name_CONTAINS: $fname,
+        dimension: {name: $fdimension},
+        type: {name: $fdimensionType}
+      }
   ) {
-    name,
-    dimension(where: {name: $fdimension}) {
+    name
+    id
+    dimension {
       name
+      id
     },
-    type(where: {name: $fdimensionType}) {
+    type {
       name
+      id
     }
   }
+}
+
+query ListLocationOptions {
+  dimensions {
+    name
+    id
+  }
+  dimensionTypes {
+    id
+    name
+  } 
 }
 
 query ListEpisodes(
@@ -55,7 +97,9 @@ query ListEpisodes(
       ]}
   ) {
     name,
+    id
     date,
     code
   }
 }
+
