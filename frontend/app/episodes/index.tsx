@@ -7,7 +7,7 @@ import {TextSearch, SelectorFilter} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
-import {ListEpisodes} from '../../queries/queries.graphql';
+import {ListEpisodes} from '../../queries/lists.graphql';
 import { Button } from '../../components/Input';
 
 
@@ -31,7 +31,7 @@ export default function LocationFilters() {
 
 function EpisodeCard({name, id, date, code}: {name: string, id: string, date: string, code: string}) {
   return (
-    <Card title={name}>
+    <Card title={name} id={id} entity='episodes'>
         <Text style={styles.cardSpecial}>{date}</Text>
         <Text style={styles.cardSpecialBold}>{code}</Text>
     </Card>

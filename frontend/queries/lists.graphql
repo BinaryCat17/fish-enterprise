@@ -8,7 +8,7 @@ query ListCharacters(
 ) {
   characters(options: {offset: $offset, limit: $limit},
       where: {
-        name_CONTAINS: $fname,
+        name_CONTAINS: $fname,  
         specie: {name: $fspecie},
         gender: {name: $fgender},
         status: {name: $fstatus}

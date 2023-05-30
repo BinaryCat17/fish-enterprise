@@ -7,7 +7,7 @@ import {TextSearch, SelectorFilter} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
-import {ListLocations, ListLocationOptions} from '../../queries/queries.graphql';
+import {ListLocations, ListLocationOptions} from '../../queries/lists.graphql';
 import { Button } from '../../components/Input';
 
 
@@ -46,7 +46,7 @@ export default function LocationFilters() {
 
 function LocationCard({name, id, dimension, type}: {name: string, id: string, dimension: string, type: string}) {
     return (
-      <Card title={name + '('+dimension+')'}>
+      <Card title={name + '('+dimension+')'} entity='locations' id={id}>
           <Text style={styles.cardSpecial}>{type}</Text>
       </Card>
     )

@@ -7,7 +7,8 @@ import {TextSearch, SelectorFilter, Button} from "../../components/Input";
 import { View, Text } from "../../components/Themed";
 import { GridView } from '../../components/Views';
 import Card from '../../components/Card';
-import {ListCharacters, ListCharacterOptions} from '../../queries/queries.graphql';
+import {ListCharacters, ListCharacterOptions} from '../../queries/lists.graphql';
+import { Stack } from 'expo-router';
 
 
 export default function CharacterFilters() {  
@@ -46,7 +47,7 @@ export default function CharacterFilters() {
 
 function CharacterCard({name, id, specie}: {name: string, id: string, specie: string}) {
   return (
-    <Card title={name} imageName={name} imageHeight={168}>
+    <Card title={name} imageName={name} imageHeight={168} id={id} entity='characters'>
         <Text style={styles.cardSpecial}>{specie}</Text>
     </Card>
 

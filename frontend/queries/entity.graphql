@@ -1,0 +1,63 @@
+query CharacterInfo ($id: ID) {
+  characters(where: {id: $id}) {
+    name
+    gender {
+      name
+    }
+    status {
+      name
+    }
+    specie {
+      name
+    }
+    origin
+    type
+    location {
+      id
+      name
+      dimension {
+        name
+      }
+    }
+    episodes {
+      code
+      name
+      date
+      id
+    }
+  }
+}
+
+query LocationInfo ($id: ID) {
+  locations(where: {id: $id}) {
+    name
+    dimension {
+      name
+    }
+    type {
+      name
+    }
+    residents {
+      id
+      name
+      specie {
+        name       
+      }
+    }
+  }
+}
+
+query EpisodeInfo ($id: ID) {
+  episodes(where: {id: $id}) {
+    name
+    code
+    date
+    cast {
+      id
+      name
+      specie {
+        name
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ export function Header(props: ViewProps) {
     return (
         <View {...props}>
             <View style={[styles.headerRow]}>
-                <Link href="/"><Image style={styles.headerIcon} source={{uri:'assets/images/header-icon.png'}}></Image></Link> 
+                <Link href="/"><Image style={styles.headerIcon} source={{uri:'/assets/images/header-icon.png'}}></Image></Link> 
                 <View style={styles.linksRow}>
                     <Link href="characters"><Text style={styles.linkStyle}>Characters</Text></Link>
                     <Link href="locations"><Text style={styles.linkStyle}>Locations</Text></Link>

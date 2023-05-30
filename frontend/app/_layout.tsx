@@ -8,7 +8,6 @@ import { useColorScheme } from 'react-native';
 import { View } from '../components/Themed';
 import { Header, Footer } from '../components/Layout';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { offsetLimitPagination } from "@apollo/client/utilities";
 
 
 export {
@@ -120,7 +119,8 @@ const styles = StyleSheet.create({
     },
     content: {
       width: "100%",
-      marginBottom: 85
+      marginBottom: 85,
+      flex: 1,
     },
     nestedContent: {
         top: "60px",

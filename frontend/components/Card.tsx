@@ -1,24 +1,27 @@
 import React from 'react';
-import { StyleSheet, TextInput, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { Link } from "expo-router";
 import { View, Text } from '../components/Themed';
 
 export default function Card({imageName, imageWidth, imageHeight, title, children, entity, id}:
         {imageName?: string, id?: string, title: string, children: React.ReactNode, entity?: string, imageWidth?: number, imageHeight?: number}) {
     let image = <View/>
     if (imageName) {
-        image = <Image source={{uri: 'assets/images/' + imageName + '.png'}} style={[styles.cardImage, {width: imageWidth, height: imageHeight}]}/>
+        image = <Image source={{uri: '/assets/images/' + imageName + '.png'}} style={[styles.cardImage, {width: imageWidth, height: imageHeight}]}/>
     }
 
     return (
-      <View style={styles.card}>
-        {image}
-        <View style={styles.cardTextBlock}>
-          <Text style={styles.cardName}>{title}</Text>
-          <View>
-            {children}
+      <Link href={'/'+entity+'/'+id} style={styles.card}>
+        <View style={styles.cardView}>
+          {image}
+          <View style={styles.cardTextBlock}>
+            <Text style={styles.cardName}>{title}</Text>
+            <View>
+              {children}
+            </View>
           </View>
         </View>
-      </View>
+      </Link>
     )
   }
 
@@ -36,9 +39,9 @@ export default function Card({imageName, imageWidth, imageHeight, title, childre
     card: {
         flexDirection: 'column',
         shadowColor: "rgba(0, 0, 0, 0.2)",
-        shadowOffset: {width: -2, height: 2},
+        shadowOffset: {width: -2, height: 3},
         shadowRadius: 3,
-        borderRadius: 15,
+        borderRadius: 20,
         borderWidth: 1,
         borderColor: "rgba(0, 0, 0, 0.1)"
       },
@@ -46,7 +49,7 @@ export default function Card({imageName, imageWidth, imageHeight, title, childre
         margin: 16,
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       cardName: {
         fontFamily: 'Roboto',
@@ -54,5 +57,10 @@ export default function Card({imageName, imageWidth, imageHeight, title, childre
         fontWeight: "500",
         fontSize: 20,
         lineHeight: 30
+      },
+      cardView: {
+        flex:1,
+        width:'100%',
+        borderRadius: 20,
       }
   })
