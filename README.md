@@ -7,9 +7,11 @@
 
 - реализована подгрузка данных страницами при нажатии кнопки load more
 - фильтрация данных на каждой из страниц через запросы GraphQL
+- все переходы между карточками работают
 
 ![image](https://github.com/BinaryCat17/fish-enterprise/assets/48065080/939d3b27-922c-4f15-a8fd-3cfc46d83eb2)
 ![image](https://github.com/BinaryCat17/fish-enterprise/assets/48065080/fa5830e4-0d76-420f-8698-28847731ee38)
+![image](https://github.com/BinaryCat17/fish-enterprise/assets/48065080/ba5d7ab1-531d-4a32-a457-89b05a8c3f60)
 
 
 Команду cypher можно запускать несколько раз, чтобы нагенерить много Риков и Морти, а основные типы по которым идёт фильтрация останутся в единичном экзепляре
